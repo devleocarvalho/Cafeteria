@@ -26,4 +26,5 @@ Projeto desenvolvido para:
 
 ## 🚀 Execução Local
 
-https://github.com/devleocarvalho/cafeteria
+[https://github.com/devleocarvalho/cafeteria](https://cafeteria-nine-mu.vercel.app/)
+
