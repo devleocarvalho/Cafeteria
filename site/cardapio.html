@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz@9..144&family=Lato&family=Merriweather&family=Oswald&family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcur icon" href="./img/logo.ico" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Cardápio - Madrid Coffee House</title>
+    <style>
+       * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .topo {
+          width: 100%;
+          height: 10vh;
+          position:fixed;
+          background-color: #623c0c;
+          z-index: 1;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 1%;
+      }
+
+      .topo img {
+          width: auto;
+      }
+
+      .topo div a {
+          margin-left: 20px;
+          font-size: 18px;
+          font-family: "Oswald", sans-serif;
+          font-weight: 700;
+          text-decoration: none;
+          text-shadow: 1px 1px 1px #000000;
+          letter-spacing: 2px;
+          color: #c4a47c;
+          transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .topo div a:hover {
+          color: #40ff00d3;
+          transform: translateY(-2px);
+      }
+
+      .btn-admin {
+          background-color: #c4a47c;
+          color: #fff !important;
+          padding: 8px 15px;
+          border-radius: 5px;
+          letter-spacing: 1px;
+          text-shadow: none;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn-admin:hover {
+          background-color: #40ff00d3;
+      }
+
+      .cardapio-banner {
+        background-image: url(./img/cardapio-banner.jpg);
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        text-shadow: 2px 2px 4px #000;
+        font-family: "Oswald", sans-serif;
+        font-size: 4em;
+        
+      }
+      .cardapio-secao {
+        padding: 60px 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
+      .cardapio-secao h2 {
+        color: #604829;
+        font-family: "Oswald", sans-serif;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5em;
+      }
+      .produtos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+      .produto-card {
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+      .produto-card:hover {
+        transform: translateY(-5px);
+      }
+      .produto-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .produto-info {
+        padding: 20px;
+      }
+      .produto-info h3 {
+        font-family: "Oswald", sans-serif;
+        color: #c4a47c;
+        margin-bottom: 10px;
+      }
+      .produto-info p {
+        font-family: "Lato", sans-serif;
+        color: #666;
+        margin-bottom: 15px;
+      }
+      .produto-info .preco {
+        font-family: "Oswald", sans-serif;
+        font-size: 1.5em;
+        color: #604829;
+        font-weight: bold;
+      }
+      .add-to-cart {
+        background-color: #604829;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Oswald", sans-serif;
+        letter-spacing: 1px;
+        margin-top: 15px;
+        transition: background-color 0.3s ease;
+      }
+      .add-to-cart:hover {
+        background-color: #40ff00d3;
+      }
+
+      /* Estilos do Carrinho */
+      .cart-container {
+        background-color: #f8f8f8;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+      }
+      .cart-container h3 {
+        color: #604829;
+        font-family: "Oswald", sans-serif;
+        margin-bottom: 20px;
+      }
+      #cart-items {
+        list-style: none;
+        padding: 0;
+      }
+      #cart-items li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px dashed #ccc;
+      }
+      #cart-items li:last-child {
+        border-bottom: none;
+      }
+      .cart-total {
+        font-family: "Oswald", sans-serif;
+        font-size: 1.5em;
+        margin-top: 20px;
+        text-align: right;
+        color: #c4a47c;
+      }
+      .finalizar-pedido-btn {
+        background-color: #c4a47c;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Oswald", sans-serif;
+        letter-spacing: 2px;
+        width: 100%;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+      }
+      .finalizar-pedido-btn:hover {
+        background-color: #40ff00d3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="topo">
+         <div>
+        <a href="/index.html" class="btn-menu">INÍCIO</a>
+        <a href="/site/cardapio.html" class="btn-menu">CARDÁPIO</a>
+        <a href="/admin-login.html" class="btn-admin">ADMIN</a>
+      </div>
+    </div>
+
+    <div class="cardapio-banner">
+      <h1>Nosso Cardápio</h1>
+    </div>
+
+    <div class="cardapio-secao">
+      <h2>Bebidas Quentes</h2>
+      <div id="bebidas-quentes" class="produtos-grid">
+        </div>
+    </div>
+
+    <div class="cardapio-secao">
+      <h2>Doces & Lanches</h2>
+      <div id="doces-lanches" class="produtos-grid">
+        </div>
+    </div>
+
+    <div class="cardapio-secao">
+      <h2>Seu Pedido</h2>
+      <div class="cart-container">
+        <h3>Itens no Carrinho</h3>
+        <ul id="cart-items">
+          </ul>
+        <div class="cart-total">
+          Total: R$ <span id="cart-total-value">0.00</span>
+        </div>
+        <button class="finalizar-pedido-btn">Finalizar Pedido</button>
+      </div>
+    </div>
+
+    <div class="container-rodape">
+      <p>© Madrid - Coffee House - Todos os direitos reservados</p>
+      <p>Desenvolvido por <span>"devleocarvalho"</span></p>
+    </div>
+
+    <script src="cardapio-script.js"></script>
+  </body>
+</html>

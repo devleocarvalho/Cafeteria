@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Administrador - Café Madrid</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .dashboard-container {
+            padding: 80px 20px;
+        }
+        .dashboard-container h2 {
+            color: #604829;
+            font-family: "Oswald", sans-serif;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            color: #c4a47c;
+            margin-bottom: 15px;
+            font-family: "Oswald", sans-serif;
+        }
+        #pedidos-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-family: "Oswald", sans-serif;
+        }
+        #pedidos-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="topo">
+      <img src="./img/logo.png" alt="logomarca" />
+      <div>
+        <a href="index.html">INÍCIO</a>
+        <a href="admin-dashboard.html">PAINEL</a>
+        <a href="#" onclick="logout()">SAIR</a>
+      </div>
+    </div>
+    
+    <div class="dashboard-container">
+        <h2>Painel do Administrador</h2>
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Pedidos Recentes</h3>
+                <ul id="pedidos-list"></ul>
+            </div>
+            <div class="card">
+                <h3>Resumo Diário</h3>
+                <p>Vendas de hoje: <span id="vendas-dia">R$ 0,00</span></p>
+                <p>Pedidos: <span id="pedidos-dia">0</span></p>
+            </div>
+            <div class="card">
+                <h3>Relatório Mensal</h3>
+                <p>Mês atual: Agosto</p>
+                <p>Vendas do mês: <span id="vendas-mes">R$ 0,00</span></p>
+            </div>
+            <div class="card">
+                <h3>Controle de Estoque</h3>
+                <ul id="estoque-list"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-rodape"> 
+      <p>© Madrid - Coffee House - Todos os direitos reservados</p>
+      <p>Desenvolvido por <span>"devleocarvalho"</span></p>
+    </div>
+
+    <script>
+        function logout() {
+           
+            window.location.href = 'admin-login.html';
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const pedidos = [
+                { id: 1, item: 'Expresso', status: 'Em preparo' },
+                { id: 2, item: 'Cappuccino', status: 'Finalizado' },
+                { id: 3, item: 'Bolo de Cenoura', status: 'Em preparo' }
+            ];
+            const estoque = [
+                { item: 'Café Grão', quantidade: 50 },
+                { item: 'Leite', quantidade: 20 },
+                { item: 'Bolo', quantidade: 5 }
+            ];
+
+            const pedidosList = document.getElementById('pedidos-list');
+            pedidos.forEach(pedido => {
+                const li = document.createElement('li');
+                li.textContent = `Pedido #${pedido.id}: ${pedido.item} - Status: ${pedido.status}`;
+                pedidosList.appendChild(li);
+            });
+
+            const estoqueList = document.getElementById('estoque-list');
+            estoque.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.item}: ${item.quantidade} unidades`;
+                estoqueList.appendChild(li);
+            });
+
+            document.getElementById('vendas-dia').textContent = 'R$ 150,00';
+            document.getElementById('pedidos-dia').textContent = '5';
+            document.getElementById('vendas-mes').textContent = 'R$ 3.500,00';
+        });
+    </script>
+</body>
+</html>
