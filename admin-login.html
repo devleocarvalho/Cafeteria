@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sessão Administrativa | Madrid Coffee House</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;700&family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-image: linear-gradient(rgba(26, 17, 10, 0.8), rgba(26, 17, 10, 0.8)), url("./img/parallax-imagem1.png");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: var(--glass-dark);
+            padding: 50px;
+            border-radius: 24px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: var(--accent);
+            font-size: 28px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            color: var(--text-white);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .login-box input:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-box button:hover {
+            background: var(--text-white);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <img src="./img/logo.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+        <h2>Acesso Restrito</h2>
+        <form id="admin-login-form">
+            <input type="text" id="username" placeholder="Usuário" required />
+            <input type="password" id="password" placeholder="Senha" required />
+            <button type="submit">Entrar no Painel</button>
+        </form>
+        <a href="index.html" class="back-link">← Voltar para o site</a>
+    </div>
+    <script>
+        document.getElementById('admin-login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simulação de credenciais
+            if (username === 'admin' && password === '123') {
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                alert('Credenciais inválidas. Tente novamente.');
+            }
+        });
+    </script>
+</body>
+</html>

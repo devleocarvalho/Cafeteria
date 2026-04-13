@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;700&family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="../img/logo.ico" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Cardápio Digital | Madrid Coffee House</title>
+    <meta name="description" content="Explore o cardápio premium da Madrid Coffee House. Peça seu café espresso, cappuccino ou doces artesanais diretamente da sua mesa." />
+    <meta property="og:title" content="Cardápio Madrid Coffee House" />
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#c4a47c" />
+    <link rel="icon" type="image/png" href="../img/logo.png" />
+    <style>
+      /* Cardápio Specific Styles */
+      .cardapio-banner {
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1920);
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-white);
+        text-align: center;
+      }
+
+      .cardapio-banner h1 {
+        font-size: clamp(32px, 6vw, 64px);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+      }
+
+      .cardapio-secao {
+        padding: 100px 5%;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      .cardapio-secao h2 {
+        color: var(--primary);
+        font-size: 32px;
+        margin-bottom: 50px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .cardapio-secao h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 2px;
+        background: var(--accent);
+      }
+
+      .produtos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 40px;
+      }
+
+      .produto-card {
+        background: var(--text-white);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: 1px solid rgba(0,0,0,0.05);
+      }
+
+      .produto-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+      }
+
+      .produto-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .produto-info {
+        padding: 30px;
+        text-align: center;
+      }
+
+      .produto-info h3 {
+        color: var(--primary);
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      .produto-info p {
+        color: var(--text-light);
+        font-size: 14px;
+        margin-bottom: 20px;
+        min-height: 40px;
+      }
+
+      .produto-info .preco {
+        font-family: 'Fraunces', serif;
+        font-size: 24px;
+        color: var(--accent);
+        font-weight: 700;
+        display: block;
+        margin-bottom: 20px;
+      }
+
+      .add-to-cart {
+        background: var(--primary);
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        padding: 12px 25px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 700;
+        width: 100%;
+        transition: var(--transition);
+      }
+
+      .add-to-cart:hover {
+        background: var(--accent);
+        color: var(--primary);
+      }
+
+      /* Carrinho UI */
+      .cart-container {
+        background: var(--glass-dark);
+        padding: 40px;
+        border-radius: 24px;
+        color: var(--text-white);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+      }
+
+      #cart-items {
+        list-style: none;
+        margin-bottom: 30px;
+      }
+
+      #cart-items li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .cart-total {
+        font-family: 'Fraunces', serif;
+        font-size: 28px;
+        color: var(--accent);
+        text-align: right;
+        margin: 30px 0;
+      }
+
+      .finalizar-pedido-btn {
+        background: var(--accent);
+        color: var(--primary);
+        border: none;
+        padding: 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 16px;
+        width: 100%;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: var(--transition);
+      }
+
+      .finalizar-pedido-btn:hover {
+        background: var(--text-white);
+        transform: scale(1.02);
+      }
+
+      /* Floating Actions */
+      .btn-float {
+        background: var(--accent) !important;
+        color: var(--primary) !important;
+        box-shadow: var(--shadow);
+      }
+
+      /* Modal */
+      .modal-content {
+        background: var(--secondary) !important;
+        border-radius: 24px !important;
+        border: 1px solid var(--accent);
+      }
+
+      .qr-pix {
+        border-color: var(--accent) !important;
+        border-radius: 12px;
+        padding: 20px;
+        background: #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="topo">
+      <img src="../img/logo.png" alt="Madrid Coffee House Logo" class="logo" />
+      
+      <!-- Menu Hambúrguer -->
+      <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="../index.html">Início</a>
+        <a href="../index.html#informacoes">Sobre</a>
+        <a href="cardapio.html">Cardápio</a>
+        <a href="../index.html#contatos">Contatos</a>
+        <a href="../index.html#horarios">Horários</a>
+        <a href="../admin-login.html" class="btn-admin">Admin</a>
+      </nav>
+    </header>
+
+    <section class="cardapio-banner">
+      <h1>Menu Selecionado</h1>
+    </section>
+
+    <main>
+      <section class="cardapio-secao">
+        <h2>Bebidas Quentes</h2>
+        <div id="bebidas-quentes" class="produtos-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <section class="cardapio-secao">
+        <h2>Doces & Lanches</h2>
+        <div id="doces-lanches" class="produtos-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <section class="cardapio-secao">
+        <div class="cart-container">
+          <h2>Seu Pedido</h2>
+          <h3>Itens no Carrinho</h3>
+          <ul id="cart-items">
+            <!-- Populated by JS -->
+          </ul>
+          <div class="cart-total">
+            Total: R$ <span id="cart-total-value">0.00</span>
+          </div>
+          <div id="cart-actions"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="floating-actions">
+        <button class="btn-float" onclick="chamarGarcom()" title="Chamar Garçom">🔔</button>
+    </div>
+
+    <div id="payment-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Pagamento Digital</h3>
+            <p>Escaneie o QR Code abaixo para realizar o pagamento via PIX (Mesa <span id="modal-mesa"></span>)</p>
+            <div class="qr-pix">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PagamentoCafeMadrid" alt="QR Code Pix">
+            </div>
+            <p class="preco" style="font-size: 24px;">Total: R$ <span id="modal-total">0.00</span></p>
+            <button class="finalizar-pedido-btn" onclick="confirmarPagamento()">Confirmar Pagamento</button>
+            <button class="add-to-cart" style="border: none; margin-top: 15px; color: #ff6b6b;" onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <footer class="container-rodape">
+      <p>&copy; Madrid Coffee House - Todos os direitos reservados</p>
+      <p>Elevado por <span>devleocarvalho</span></p>
+    </footer>
+
+    <script src="cardapio-script.js"></script>
+  </body>
+</html>

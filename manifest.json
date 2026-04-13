@@ -1,0 +1,21 @@
+{
+  "name": "Madrid Coffee House",
+  "short_name": "Madrid Cafe",
+  "description": "Premium Coffee Experience in Madrid",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a110a",
+  "theme_color": "#c4a47c",
+  "icons": [
+    {
+      "src": "img/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

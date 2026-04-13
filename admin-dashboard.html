@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Administrador - Café Madrid</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body { background: var(--secondary); }
+        
+        .dashboard-container {
+            padding: 120px 5% 60px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-header h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .status-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .card-icon {
+            font-size: 32px;
+            background: var(--secondary);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+        }
+
+        .card-data .label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .card-data h3 {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .list-header h3 {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .badge {
+            background: #e1f5fe;
+            color: #039be5;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.warning {
+            background: #fff3e0;
+            color: #fb8c00;
+        }
+
+        .styled-list {
+            list-style: none;
+        }
+
+        .styled-list li {
+            padding: 15px 0;
+            border-bottom: 1px dotted #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .styled-list li:last-child { border: none; }
+
+        .status-tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .status-tag.preparo { background: #fff8e1; color: #ffa000; }
+        .status-tag.finalizado { background: #e8f5e9; color: #43a047; }
+
+        @media (max-width: 992px) {
+            .stats-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topo">
+      <img src="./img/logo.png" alt="Madrid Coffee House Logo" class="logo" />
+      
+      <!-- Menu Hambúrguer -->
+      <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="index.html">Início</a>
+        <a href="admin-dashboard.html">Painel</a>
+        <a href="#" class="btn-admin" onclick="logout()">Sair</a>
+      </nav>
+    </header>
+    
+    <main class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Gestão Madrid Coffee House</h2>
+            <p>Bem-vindo de volta, Administrador.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card status-card">
+                <div class="card-icon">☕</div>
+                <div class="card-data">
+                    <span class="label">Pedidos Hoje</span>
+                    <h3 id="pedidos-dia">0</h3>
+                </div>
+            </div>
+            <div class="card status-card">
+                <div class="card-icon">💰</div>
+                <div class="card-data">
+                    <span class="label">Vendas Hoje</span>
+                    <h3 id="vendas-dia">R$ 0,00</h3>
+                </div>
+            </div>
+            <div class="card status-card">
+                <div class="card-icon">📅</div>
+                <div class="card-data">
+                    <span class="label">Vendas Mês</span>
+                    <h3 id="vendas-mes">R$ 0,00</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="card list-card">
+                <div class="list-header">
+                    <h3>Pedidos em Tempo Real</h3>
+                    <span class="badge">Live</span>
+                </div>
+                <ul id="pedidos-list" class="styled-list"></ul>
+            </div>
+            
+            <div class="card list-card">
+                <div class="list-header">
+                    <h3>Estoque Crítico</h3>
+                    <span class="badge warning">Alerta</span>
+                </div>
+                <ul id="estoque-list" class="styled-list"></ul>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="container-rodape"> 
+      <p>© Madrid - Coffee House - Todos os direitos reservados</p>
+      <p>Desenvolvido por <span>devleocarvalho</span></p>
+    </footer>
+
+    <script>
+        function logout() {
+            sessionStorage.removeItem('admin_logged');
+            window.location.href = 'admin-login.html';
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (mobileMenu && navMenu) {
+            mobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                document.body.classList.toggle('overflow-hidden');
+            });
+
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verifica login (simples)
+            // if (!sessionStorage.getItem('admin_logged')) window.location.href = 'admin-login.html';
+
+            const pedidosMock = [
+                { mesa: 5, item: 'Expresso', status: 'preparo' },
+                { mesa: 2, item: 'Cappuccino', status: 'finalizado' },
+                { mesa: 8, item: 'Bolo de Cenoura', status: 'preparo' },
+                { mesa: 1, item: 'Torta de Morango', status: 'finalizado' }
+            ];
+
+            const estoqueMock = [
+                { item: 'Grãos Arábica', qtd: '12kg', status: 'normal' },
+                { item: 'Leite Integral', qtd: '4L', status: 'critical' },
+                { item: 'Açúcar Orgânico', qtd: '2kg', status: 'normal' }
+            ];
+
+            const pedidosList = document.getElementById('pedidos-list');
+            pedidosMock.forEach(p => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>Mesa ${p.mesa} — ${p.item}</span>
+                    <span class="status-tag ${p.status}">${p.status.toUpperCase()}</span>
+                `;
+                pedidosList.appendChild(li);
+            });
+
+            const estoqueList = document.getElementById('estoque-list');
+            estoqueMock.forEach(e => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${e.item}</span>
+                    <span style="color: ${e.status === 'critical' ? '#e74c3c' : 'inherit'}">${e.qtd}</span>
+                `;
+                estoqueList.appendChild(li);
+            });
+
+            // Mock counters
+            document.getElementById('pedidos-dia').textContent = '24';
+            document.getElementById('vendas-dia').textContent = 'R$ 482,50';
+            document.getElementById('vendas-mes').textContent = 'R$ 12.450,00';
+        });
+    </script>
+</body>
+</html>
